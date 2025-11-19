@@ -46,4 +46,5 @@ Visit http://localhost:3000 to access the dashboard.
 
 - Dashboard with search, inline validation, copy buttons, delete confirmations
 - Stats page (`/code/:code`) with metrics and quick actions
+- Health page (`/health`) surfaces `/healthz` status and uptime
 - Global snackbar notifications, health check UI, responsive layout
