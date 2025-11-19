@@ -13,8 +13,23 @@ export async function createLink(data: { code: string; targetUrl: string }) {
   });
 }
 
-export async function listLinks() {
+const useInsensitiveMode = !process.env.DATABASE_URL?.startsWith("file:");
+
+const buildStringFilter = (value: string) =>
+  useInsensitiveMode
+    ? { contains: value, mode: "insensitive" as const }
+    : { contains: value };
+
+export async function listLinks(search?: string) {
   return prisma.link.findMany({
+    where: search
+      ? {
+          OR: [
+            { code: buildStringFilter(search) },
+            { targetUrl: buildStringFilter(search) },
+          ],
+        }
+      : undefined,
     orderBy: { createdAt: "desc" },
   });
 }

@@ -76,9 +76,10 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const links = await listLinks();
+    const search = req.nextUrl.searchParams.get("q") ?? undefined;
+    const links = await listLinks(search);
     const baseUrl =
       process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
